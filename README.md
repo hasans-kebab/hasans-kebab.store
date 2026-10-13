@@ -5,7 +5,9 @@ Animierte Website für **Hasans Kebab** (Döner-Pizza-Kebab Hasans) in Bad Schus
 
 ## Was drin ist
 
-- **Intro-Loader** mit drehendem Dönerspieß
+- **Intro**: Dönerspieß glüht auf, Funken steigen, „HASANS KEBAB“ füllt sich mit Glut (mit Zähler und
+  Sprüchen wie „Spieß wird angeheizt“), dann teilt ein Messerschnitt den Bildschirm und beide Hälften
+  fliegen auseinander (wird bei „Bewegung reduzieren“ übersprungen)
 - **Kopfbereich** „HASANS KEBAB“ mit großem Dönerspieß, der sich **nur während der Öffnungszeiten
   (täglich 11–22 Uhr, deutsche Zeit)** langsam dreht und nachts stillsteht. Daneben der Status
   „Jetzt geöffnet“ (grüner Punkt) bzw. „Geschlossen“ (roter Punkt); die Uhrzeit wird beim Laden

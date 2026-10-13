@@ -9,7 +9,6 @@
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
   const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
   const lerp = (a, b, t) => a + (b - a) * t;
-  const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
   const easeOutBack = (t) => {
     const c1 = 1.5, c3 = c1 + 1;
     return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
@@ -355,10 +354,14 @@
 
   measure();
 
-  /* ---------- Loader ---------- */
-  const countEl = $('[data-count]');
+  /* ---------- Intro: Glut füllt den Schriftzug, dann Messerschnitt ---------- */
+  const loader = $('.loader');
+  const countEls = $$('[data-count]');
+  const msgEls = $$('[data-loader-msg]');
+  const MSGS = [[0, 'Spieß wird angeheizt'], [0.34, 'Fleisch wird geschnitten'], [0.68, 'Soße kommt drauf'], [1, 'Frisch vom Spieß!']];
   const startedAt = performance.now();
-  const MIN_TIME = reduce ? 0 : 1400;
+  const FILL_DELAY = 380; // erst fliegt der Schriftzug herein, dann steigt die Glut
+  const FILL_TIME = 1350;
   const MAX_TIME = 4000;
   let pageLoaded = document.readyState === 'complete';
   addEventListener('load', () => { pageLoaded = true; }, { once: true });
@@ -367,18 +370,39 @@
     html.classList.remove('is-loading');
     html.classList.add('is-loaded');
     requestAnimationFrame(measure);
+    // nach dem Auseinanderfliegen ganz entfernen, damit Funken & Glut nicht im Hintergrund weiterlaufen
+    if (loader) setTimeout(() => loader.remove(), reduce ? 0 : 1500);
   };
 
-  if (reduce) {
+  if (reduce || !loader) {
     finishLoading();
   } else {
+    let lastCount = -1;
+    let lastMsg = '';
     const tickLoader = (now) => {
       const elapsed = now - startedAt;
-      let t = clamp(elapsed / MIN_TIME);
-      if (!pageLoaded && elapsed < MAX_TIME) t = Math.min(t, 0.92);
-      if (countEl) countEl.textContent = Math.round(easeOutCubic(t) * 100);
-      if (t >= 1) finishLoading();
-      else requestAnimationFrame(tickLoader);
+      let p = clamp((elapsed - FILL_DELAY) / FILL_TIME); // gleichmäßig hochzählen, dann harter Schnitt
+      if (!pageLoaded && elapsed < MAX_TIME) p = Math.min(p, 0.92);
+      // erst füllt sich „KEBAB“ (unten), dann „HASANS“
+      loader.style.setProperty('--p2', clamp(p * 2).toFixed(3));
+      loader.style.setProperty('--p1', clamp(p * 2 - 1).toFixed(3));
+      const count = Math.round(p * 100);
+      if (count !== lastCount) {
+        lastCount = count;
+        countEls.forEach((el) => { el.textContent = count; });
+      }
+      const msg = MSGS.filter(([from]) => p >= from).pop()[1];
+      if (msg !== lastMsg) {
+        lastMsg = msg;
+        msgEls.forEach((el) => { el.textContent = msg; });
+      }
+      if (p >= 1) {
+        // Schnitt und Auseinanderfliegen starten zusammen, die Verzögerung steckt im CSS
+        html.classList.add('is-cut');
+        finishLoading();
+      } else {
+        requestAnimationFrame(tickLoader);
+      }
     };
     requestAnimationFrame(tickLoader);
   }

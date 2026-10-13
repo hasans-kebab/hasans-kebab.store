@@ -16,7 +16,7 @@
 
   <link rel="preload" href="assets/fonts/unbounded-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/style.css?v=9">
+  <link rel="stylesheet" href="assets/css/style.css?v=10">
   <script>document.documentElement.classList.replace('no-js', 'js');</script>
 
   <script type="application/ld+json">
@@ -134,16 +134,30 @@
     <symbol id="l-plus" viewBox="0 0 32 32"><path d="M16 8v16M8 16h16"/></symbol>
   </svg>
 
-  <!-- Intro-Loader -->
+  <!-- Intro: Spieß glüht auf, Schriftzug füllt sich mit Glut, ein Messerschnitt teilt den Bildschirm -->
   <div class="loader" aria-hidden="true">
-    <div class="loader__panel loader__panel--back"></div>
-    <div class="loader__panel loader__panel--front">
-      <div class="loader__inner">
+    <div class="loader__half loader__half--back loader__half--top"></div>
+    <div class="loader__half loader__half--back loader__half--bottom"></div>
+    <div class="loader__half loader__half--top">
+      <div class="loader__scene">
+        <div class="loader__glow"></div>
+        <div class="loader__embers"><i style="--x:47.7%;--s:4.8px;--t:2.67s;--d:-0.38s;--dx:-59px"></i><i style="--x:95.7%;--s:4.2px;--t:2.63s;--d:-1.21s;--dx:50px"></i><i style="--x:59.3%;--s:4.5px;--t:2.66s;--d:-0.39s;--dx:-4px"></i><i style="--x:37.8%;--s:3.7px;--t:1.94s;--d:-1.12s;--dx:-35px"></i><i style="--x:10.9%;--s:4.9px;--t:2.14s;--d:-0.87s;--dx:47px"></i><i style="--x:12.0%;--s:5.7px;--t:2.91s;--d:-1.93s;--dx:-32px"></i><i style="--x:12.4%;--s:6.0px;--t:3.11s;--d:-0.35s;--dx:-6px"></i><i style="--x:93.4%;--s:4.4px;--t:3.01s;--d:-1.68s;--dx:29px"></i><i style="--x:85.5%;--s:4.4px;--t:2.41s;--d:-0.2s;--dx:17px"></i><i style="--x:42.5%;--s:4.6px;--t:2.36s;--d:-0.91s;--dx:-57px"></i><i style="--x:62.9%;--s:2.8px;--t:1.91s;--d:-1.5s;--dx:-27px"></i><i style="--x:36.8%;--s:3.8px;--t:2.7s;--d:-1.82s;--dx:-46px"></i><i style="--x:27.2%;--s:3.7px;--t:2.19s;--d:-1.26s;--dx:37px"></i><i style="--x:50.0%;--s:2.6px;--t:2.92s;--d:-1.26s;--dx:6px"></i><i style="--x:6.4%;--s:4.9px;--t:1.67s;--d:-0.34s;--dx:17px"></i><i style="--x:13.4%;--s:4.4px;--t:1.88s;--d:-1.31s;--dx:-56px"></i></div>
         <svg class="loader__spit"><use href="#i-spit"/></svg>
-        <div class="loader__word">HASAN'S</div>
-        <div class="loader__count"><span data-count>0</span>%</div>
+        <p class="loader__title"><span class="loader__word" data-text="HASANS">HASANS</span><span class="loader__word loader__word--2" data-text="KEBAB">KEBAB</span></p>
+        <p class="loader__status"><span data-loader-msg>Spieß wird angeheizt</span> <span class="loader__count"><span data-count>0</span>%</span></p>
       </div>
     </div>
+    <div class="loader__half loader__half--bottom">
+      <div class="loader__scene">
+        <div class="loader__glow"></div>
+        <div class="loader__embers"><i style="--x:47.7%;--s:4.8px;--t:2.67s;--d:-0.38s;--dx:-59px"></i><i style="--x:95.7%;--s:4.2px;--t:2.63s;--d:-1.21s;--dx:50px"></i><i style="--x:59.3%;--s:4.5px;--t:2.66s;--d:-0.39s;--dx:-4px"></i><i style="--x:37.8%;--s:3.7px;--t:1.94s;--d:-1.12s;--dx:-35px"></i><i style="--x:10.9%;--s:4.9px;--t:2.14s;--d:-0.87s;--dx:47px"></i><i style="--x:12.0%;--s:5.7px;--t:2.91s;--d:-1.93s;--dx:-32px"></i><i style="--x:12.4%;--s:6.0px;--t:3.11s;--d:-0.35s;--dx:-6px"></i><i style="--x:93.4%;--s:4.4px;--t:3.01s;--d:-1.68s;--dx:29px"></i><i style="--x:85.5%;--s:4.4px;--t:2.41s;--d:-0.2s;--dx:17px"></i><i style="--x:42.5%;--s:4.6px;--t:2.36s;--d:-0.91s;--dx:-57px"></i><i style="--x:62.9%;--s:2.8px;--t:1.91s;--d:-1.5s;--dx:-27px"></i><i style="--x:36.8%;--s:3.8px;--t:2.7s;--d:-1.82s;--dx:-46px"></i><i style="--x:27.2%;--s:3.7px;--t:2.19s;--d:-1.26s;--dx:37px"></i><i style="--x:50.0%;--s:2.6px;--t:2.92s;--d:-1.26s;--dx:6px"></i><i style="--x:6.4%;--s:4.9px;--t:1.67s;--d:-0.34s;--dx:17px"></i><i style="--x:13.4%;--s:4.4px;--t:1.88s;--d:-1.31s;--dx:-56px"></i></div>
+        <svg class="loader__spit"><use href="#i-spit"/></svg>
+        <p class="loader__title"><span class="loader__word" data-text="HASANS">HASANS</span><span class="loader__word loader__word--2" data-text="KEBAB">KEBAB</span></p>
+        <p class="loader__status"><span data-loader-msg>Spieß wird angeheizt</span> <span class="loader__count"><span data-count>0</span>%</span></p>
+      </div>
+    </div>
+    <svg class="loader__cut" viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="-2" y1="58.32" x2="102" y2="41.68" pathLength="100"/></svg>
+    <div class="loader__flash"></div>
   </div>
 
   <div class="progress" aria-hidden="true"></div>
@@ -960,7 +974,7 @@
     <button class="lightbox__btn lightbox__next" type="button" aria-label="Nächstes Bild">→</button>
   </dialog>
 
-  <script src="assets/js/common.js?v=9" defer></script>
-  <script src="assets/js/main.js?v=9" defer></script>
+  <script src="assets/js/common.js?v=10" defer></script>
+  <script src="assets/js/main.js?v=10" defer></script>
 </body>
 </html>
