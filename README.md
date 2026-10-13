@@ -8,6 +8,10 @@ Animierte Website für **Hasans Kebab** (Döner-Pizza-Kebab Hasans) in Bad Schus
 - **Intro**: Dönerspieß glüht auf, Funken steigen, „HASANS KEBAB“ füllt sich mit Glut (mit Zähler und
   Sprüchen wie „Spieß wird angeheizt“), dann teilt ein Messerschnitt den Bildschirm und beide Hälften
   fliegen auseinander (wird bei „Bewegung reduzieren“ übersprungen)
+- **Döner-Spieß** mit realistischer Fleisch-Textur (gestapelte, geröstete Fleischlappen, Fettglanz,
+  Glut vom Heizstab, tropfendes Fett). Damit er auch auf Handys flüssig läuft, ist das Fleisch ein
+  Bildstreifen (`doener-fleisch.webp`), der nur seitlich verschoben wird; Schattierung und Glut sind fertige
+  Bilder (`spiess-schatten.webp`, `spiess-glut.webp`), Spieß/Heizstab/Deckel statische SVGs.
 - **Kopfbereich** „HASANS KEBAB“ mit großem Dönerspieß, der sich **nur während der Öffnungszeiten
   (täglich 11–22 Uhr, deutsche Zeit)** langsam dreht und nachts stillsteht. Daneben der Status
   „Jetzt geöffnet“ (grüner Punkt) bzw. „Geschlossen“ (roter Punkt); die Uhrzeit wird beim Laden

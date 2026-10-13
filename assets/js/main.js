@@ -356,17 +356,10 @@
 
   /* ---------- Intro: Glut füllt den Schriftzug, dann Messerschnitt ---------- */
   const loader = $('.loader');
-  // den detaillierten Spieß aus dem Kopfbereich als echte Kopie einsetzen (Intro & „Komm vorbei“) –
-  // Animationen innerhalb von <use> laufen nicht in jedem Browser (z. B. Safari)
-  const spitArt = $('#hero-spit-art');
-  if (spitArt) {
-    $$('.loader__spit, .visit__spit').forEach((svg) => {
-      const copy = spitArt.cloneNode(true);
-      copy.removeAttribute('id');
-      svg.replaceChildren(copy);
-    });
-  }
   const countEls = $$('[data-count]');
+  // Glut-Fenster je Wort (1 = HASANS, 2 = KEBAB) und Hintergrund-Glut
+  const fills = loader ? $$('.loader__fill', loader).map((el) => [el, el.firstElementChild, el.closest('.loader__word--2') ? 2 : 1]) : [];
+  const glows = loader ? $$('.loader__glow', loader) : [];
   const msgEls = $$('[data-loader-msg]');
   const MSGS = [[0, 'Spieß wird angeheizt'], [0.34, 'Fleisch wird geschnitten'], [0.68, 'Soße kommt drauf'], [1, 'Frisch vom Spieß!']];
   const startedAt = performance.now();
@@ -380,22 +373,32 @@
     html.classList.remove('is-loading');
     html.classList.add('is-loaded');
     requestAnimationFrame(measure);
-    // nach dem Auseinanderfliegen ganz entfernen, damit Funken & Glut nicht im Hintergrund weiterlaufen
-    if (loader) setTimeout(() => loader.remove(), reduce ? 0 : 1500);
   };
 
   if (reduce || !loader) {
     finishLoading();
+    loader?.remove();
   } else {
+    // während des Intros nicht scrollen (Mausrad / Wischen); bewusst ohne overflow:hidden an <html>,
+    // denn das Wieder-Freigeben ließe die ganze Seite neu berechnen – genau im Moment des Schnitts
+    const holdScroll = (e) => e.preventDefault();
+    addEventListener('wheel', holdScroll, { passive: false });
+    addEventListener('touchmove', holdScroll, { passive: false });
     let lastCount = -1;
     let lastMsg = '';
+    let pageReady = false;
     const tickLoader = (now) => {
       const elapsed = now - startedAt;
       let p = clamp((elapsed - FILL_DELAY) / FILL_TIME); // gleichmäßig hochzählen, dann harter Schnitt
       if (!pageLoaded && elapsed < MAX_TIME) p = Math.min(p, 0.92);
-      // erst füllt sich „KEBAB“ (unten), dann „HASANS“
-      loader.style.setProperty('--p2', clamp(p * 2).toFixed(3));
-      loader.style.setProperty('--p1', clamp(p * 2 - 1).toFixed(3));
+      // erst füllt sich „KEBAB“ (unten), dann „HASANS“ – nur Verschiebungen/Deckkraft setzen, nichts neu zeichnen
+      const p1 = clamp(p * 2 - 1), p2 = clamp(p * 2);
+      fills.forEach(([win, text, n]) => {
+        const v = n === 2 ? p2 : p1;
+        win.style.transform = `translateY(${((1 - v) * 100).toFixed(2)}%)`;
+        text.style.transform = `translateY(${((v - 1) * 100).toFixed(2)}%)`;
+      });
+      glows.forEach((g) => { g.style.opacity = (0.3 + p2 * 0.7).toFixed(3); });
       const count = Math.round(p * 100);
       if (count !== lastCount) {
         lastCount = count;
@@ -406,10 +409,16 @@
         lastMsg = msg;
         msgEls.forEach((el) => { el.textContent = msg; });
       }
+      // Startseite schon kurz vor dem Schnitt freigeben (das Intro deckt noch alles ab) –
+      // so fällt die Neuberechnung der ganzen Seite nicht genau auf den Schnitt
+      if (p >= 0.9 && !pageReady) { pageReady = true; finishLoading(); }
       if (p >= 1) {
         // Schnitt und Auseinanderfliegen starten zusammen, die Verzögerung steckt im CSS
-        html.classList.add('is-cut');
-        finishLoading();
+        loader.classList.add('is-cut', 'is-split');
+        removeEventListener('wheel', holdScroll);
+        removeEventListener('touchmove', holdScroll);
+        // danach ganz entfernen, damit Funken & Glut nicht im Hintergrund weiterlaufen
+        setTimeout(() => loader.remove(), 1500);
       } else {
         requestAnimationFrame(tickLoader);
       }
