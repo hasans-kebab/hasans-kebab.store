@@ -526,20 +526,55 @@ mark { background: none; color: inherit; }
 }
 .spit::before { content: ""; position: absolute; left: 14%; right: 14%; bottom: -2.5%; height: 8%; border-radius: 50%; background: radial-gradient(closest-side, rgba(0, 0, 0, .6), transparent); }
 .spit__back, .spit__front { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.spit__glow {
+/* Grill: glühende Keramik-Brennerwand hinter dem Fleisch, Flammen an den Rändern, Funken */
+.spit__burner { position: absolute; left: 12%; top: 14.194%; width: 76%; height: 68.387%; background: url("../img/spiess-brenner.webp") 0 0 / 100% 100% no-repeat; opacity: .2; transition: opacity 1.2s; }
+html.is-open-now .spit__burner { opacity: 1; }
+.spit__burnglow {
   position: absolute;
-  left: 87.5%;
-  top: 19.5%;
-  width: 8%;
-  height: 60.5%;
-  border-radius: 999px;
-  background: linear-gradient(#ffb347, #ff3d1f 50%, #ffb347);
-  filter: blur(calc(var(--spit-h) * .028));
-  opacity: .1;
+  inset: 8% -6% 10%;
+  background: radial-gradient(50% 50% at 50% 55%, rgba(255, 110, 30, .5), rgba(255, 61, 31, .16) 62%, transparent 78%);
+  opacity: 0;
   transition: opacity 1.2s;
 }
-html.is-open-now .spit__glow { opacity: .9; animation: heater 2.6s ease-in-out infinite alternate; }
-html:not(.is-open-now) .spit__bar { opacity: .3; }
+html.is-open-now .spit__burnglow { opacity: 1; animation: grill-flicker 2.2s ease-in-out infinite alternate; }
+@keyframes grill-flicker { 30% { opacity: .82; } 55% { opacity: 1; } to { opacity: .74; } }
+.spit__flames, .spit__sparks { position: absolute; inset: 0; pointer-events: none; }
+.spit__flame { position: absolute; overflow: hidden; display: none; }
+.spit__flame--r { transform: scaleX(-1); }
+/* Flammen-Film: 20 Bilder nebeneinander, Schritt für Schritt verschoben (läuft auf der Grafikkarte) */
+.spit__flame i {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 2000%;
+  background: url("../img/spiess-flamme.webp") 0 0 / 100% 100% no-repeat;
+  animation: grill-flame var(--t, .85s) steps(20) var(--d, 0s) infinite;
+  will-change: transform;
+}
+@keyframes grill-flame { to { transform: translateX(-100%); } }
+html.is-open-now .spit__flame { display: block; }
+.spit__spark {
+  position: absolute;
+  width: 1.1%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff3c4, #ffb02e 55%, rgba(255, 90, 20, 0) 70%);
+  opacity: 0;
+  display: none;
+  animation: grill-spark var(--t, 2s) linear var(--d, 0s) infinite;
+}
+html.is-open-now .spit__spark { display: block; }
+/* Sparen, wo man es nicht sieht: Grill außerhalb des Bildschirms pausiert (main.js setzt .is-paused),
+   der große Grill zündet erst, wenn das Intro aufgeht, und im Intro-Grill gibt es keine extra Funken */
+.spit.is-paused .spit__flames, .spit.is-paused .spit__sparks,
+html:not(.is-loaded) .hero__spit .spit__flames, html:not(.is-loaded) .hero__spit .spit__sparks,
+.loader__spit .spit__sparks { display: none; }
+.spit.is-paused .spit__strip, .spit.is-paused .spit__burnglow, .spit.is-paused .spit__heatrim, .spit.is-paused .spit__drop,
+html:not(.is-loaded) .hero__spit .spit__strip { animation-play-state: paused !important; }
+@keyframes grill-spark {
+  0% { opacity: 0; transform: translate(0, 0) scale(1); }
+  12% { opacity: 1; }
+  100% { opacity: 0; transform: translate(var(--dx, 0), calc(var(--spit-h) * -.32)) scale(.4); }
+}
 .spit__meat { position: absolute; left: 14%; top: 12.258%; width: 72%; height: 72.903%; overflow: hidden; }
 .spit__strip {
   position: absolute;
@@ -558,9 +593,6 @@ html.is-open-now .spit__strip { animation-play-state: running; }
 .spit__heatrim { background-image: url("../img/spiess-glut.webp"); opacity: .12; transition: opacity 1.2s; }
 html.is-open-now .spit__heatrim { opacity: 1; animation: heater 2.6s ease-in-out infinite alternate; }
 @keyframes heater { to { opacity: .7; } }
-.spit__steam path { opacity: 0; }
-html.is-open-now .spit__steam path { animation: steam 2.9s ease-in-out infinite; }
-html.is-open-now .spit__steam path:nth-child(2) { animation-delay: 1.45s; }
 /* ein Tropfen Fett fällt in die Schale */
 .spit__drop {
   position: absolute;
@@ -1757,7 +1789,8 @@ a.chip:hover { border-color: var(--fry); color: var(--fry); }
 
 /* ---------- Weniger Bewegung ---------- */
 @media (prefers-reduced-motion: reduce) {
-  .spit__strip, .spit__glow, .spit__heatrim, .spit__drop, .spit__steam path, .spit__bands { animation: none !important; }
+  .spit__strip, .spit__burnglow, .spit__flame i, .spit__spark, .spit__heatrim, .spit__drop, .spit__bands { animation: none !important; }
+  .spit__spark { display: none !important; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; transition-delay: 0s !important; }
   .build { height: auto; }

@@ -354,6 +354,14 @@
 
   measure();
 
+  /* ---------- Döner-Grill: außerhalb des Bildschirms pausieren (spart Akku, nichts ruckelt) ---------- */
+  if ('IntersectionObserver' in window) {
+    const spitObserver = new IntersectionObserver((entries) => {
+      entries.forEach((e) => e.target.classList.toggle('is-paused', !e.isIntersecting));
+    }, { rootMargin: '120px 0px' });
+    $$('.hero__spit .spit, .visit__spit .spit').forEach((el) => spitObserver.observe(el));
+  }
+
   /* ---------- Intro: Glut füllt den Schriftzug, dann Messerschnitt ---------- */
   const loader = $('.loader');
   const countEls = $$('[data-count]');
