@@ -8,6 +8,12 @@ Animierte Website für **Hasans Kebab** (Döner-Pizza-Kebab Hasans) in Bad Schus
 - **Intro**: Dönerspieß glüht auf, Funken steigen, „HASANS KEBAB“ füllt sich mit Glut (mit Zähler und
   Sprüchen wie „Spieß wird angeheizt“), dann teilt ein Messerschnitt den Bildschirm und beide Hälften
   fliegen auseinander (wird bei „Bewegung reduzieren“ übersprungen)
+- **Döner-Grill** wie im Laden: Edelstahl-Gehäuse mit Motor, glühende Keramik-Brennerwand hinter dem
+  Fleisch (`spiess-brenner.webp`), echte Flammen an den Rändern (Bildfolge `spiess-flamme.webp`), Funken,
+  tropfendes Fett. Fleisch mit realistischer Textur (`doener-fleisch.webp`), von beiden Seiten angeglüht.
+  Nachts (22–11 Uhr) sind die Brenner aus und der Spieß steht still.
+  Damit alles auch auf Handys flüssig läuft, wird nur verschoben/überblendet (Grafikkarte); Schattierung
+  und Glut sind fertige Bilder; Grills außerhalb des Bildschirms pausieren.
 - **Kopfbereich** „HASANS KEBAB“ mit großem Dönerspieß, der sich **nur während der Öffnungszeiten
   (täglich 11–22 Uhr, deutsche Zeit)** langsam dreht und nachts stillsteht. Daneben der Status
   „Jetzt geöffnet“ (grüner Punkt) bzw. „Geschlossen“ (roter Punkt); die Uhrzeit wird beim Laden
@@ -86,10 +92,15 @@ assets/css/style.css        Design & Animationen (beide Seiten)
 assets/js/common.js         Navigation, Live-Status & Spieß-Drehung, Fortschrittsbalken (alle Seiten)
 assets/js/main.js           Animationen der Startseite
 assets/js/speisekarte.js    Kategorie-Leiste & Suche der Speisekarte
-assets/img/                 Fotos (WebP) + Vorschaubild
+assets/img/                 Fotos (WebP) in drei Größen + Vorschaubild
 assets/fonts/               Schriften (lokal)
 download/hasans-website.zip Alle Website-Dateien in einem Ordner zum Herunterladen
 ```
+
+Die Fotos werden aus den Originalen des Inhabers erzeugt: jeweils `name.webp` in Originalgröße,
+`name-md.webp` (960 px breit) und `name-sm.webp` (640 px breit), WebP-Qualität 84–86, Farben in sRGB
+(iPhone-Fotos in Display P3 werden umgerechnet). Der Browser wählt per `srcset` automatisch die passende Größe.
+Neue Fotos am besten genauso ablegen und im `srcset` aller drei Größen eintragen.
 
 Nach Änderungen an CSS/JS die Versionsnummer `?v=…` in allen HTML-Dateien erhöhen,
 damit Browser nicht die alte Version aus dem Zwischenspeicher zeigen.
