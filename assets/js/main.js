@@ -356,6 +356,16 @@
 
   /* ---------- Intro: Glut füllt den Schriftzug, dann Messerschnitt ---------- */
   const loader = $('.loader');
+  // den detaillierten Spieß aus dem Kopfbereich als echte Kopie einsetzen (Intro & „Komm vorbei“) –
+  // Animationen innerhalb von <use> laufen nicht in jedem Browser (z. B. Safari)
+  const spitArt = $('#hero-spit-art');
+  if (spitArt) {
+    $$('.loader__spit, .visit__spit').forEach((svg) => {
+      const copy = spitArt.cloneNode(true);
+      copy.removeAttribute('id');
+      svg.replaceChildren(copy);
+    });
+  }
   const countEls = $$('[data-count]');
   const msgEls = $$('[data-loader-msg]');
   const MSGS = [[0, 'Spieß wird angeheizt'], [0.34, 'Fleisch wird geschnitten'], [0.68, 'Soße kommt drauf'], [1, 'Frisch vom Spieß!']];

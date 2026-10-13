@@ -86,10 +86,15 @@ assets/css/style.css        Design & Animationen (beide Seiten)
 assets/js/common.js         Navigation, Live-Status & Spieß-Drehung, Fortschrittsbalken (alle Seiten)
 assets/js/main.js           Animationen der Startseite
 assets/js/speisekarte.js    Kategorie-Leiste & Suche der Speisekarte
-assets/img/                 Fotos (WebP) + Vorschaubild
+assets/img/                 Fotos (WebP) in drei Größen + Vorschaubild
 assets/fonts/               Schriften (lokal)
 download/hasans-website.zip Alle Website-Dateien in einem Ordner zum Herunterladen
 ```
+
+Die Fotos werden aus den Originalen des Inhabers erzeugt: jeweils `name.webp` in Originalgröße,
+`name-md.webp` (960 px breit) und `name-sm.webp` (640 px breit), WebP-Qualität 84–86, Farben in sRGB
+(iPhone-Fotos in Display P3 werden umgerechnet). Der Browser wählt per `srcset` automatisch die passende Größe.
+Neue Fotos am besten genauso ablegen und im `srcset` aller drei Größen eintragen.
 
 Nach Änderungen an CSS/JS die Versionsnummer `?v=…` in allen HTML-Dateien erhöhen,
 damit Browser nicht die alte Version aus dem Zwischenspeicher zeigen.

@@ -243,10 +243,11 @@ html.is-cut .loader__half:not(.loader__half--back) { animation: ld-shake .3s lin
 }
 .loader__spit {
   position: relative;
-  height: clamp(80px, 24vh, 230px);
+  height: clamp(100px, 30vh, 300px);
   width: auto;
-  aspect-ratio: 200 / 360;
-  filter: drop-shadow(0 0 28px rgba(255, 122, 26, .6));
+  aspect-ratio: 400 / 620;
+  overflow: visible;
+  filter: drop-shadow(0 0 30px rgba(255, 122, 26, .55));
   animation: ld-pop .9s cubic-bezier(.34, 1.56, .5, 1) both;
 }
 .loader__title {
@@ -261,8 +262,11 @@ html.is-cut .loader__half:not(.loader__half--back) { animation: ld-shake .3s lin
 .loader__word {
   position: relative;
   display: block;
-  color: transparent;
-  -webkit-text-stroke: 1.5px rgba(255, 243, 227, .55);
+  /* dunkle Buchstaben mit heller Kontur: erst die Kontur, darüber die Füllung –
+     so verschwinden die inneren Überschneidungslinien der Schrift */
+  color: #140d08;
+  -webkit-text-stroke: 3px rgba(255, 243, 227, .6);
+  paint-order: stroke fill;
   animation: ld-in-left .8s var(--ease-out) .12s both;
 }
 .loader__word--2 { animation-name: ld-in-right; animation-delay: .22s; }
@@ -271,6 +275,7 @@ html.is-cut .loader__half:not(.loader__half--back) { animation: ld-shake .3s lin
   content: attr(data-text);
   position: absolute;
   inset: 0;
+  color: transparent;
   background: linear-gradient(0deg, var(--sauce) 8%, var(--orange) 50%, var(--fry) 92%);
   -webkit-background-clip: text;
   background-clip: text;
@@ -537,7 +542,6 @@ html.is-open-now .hero-spit__steam path { animation: steam 2.9s ease-in-out infi
 html.is-open-now .hero-spit__steam path:nth-child(2) { animation-delay: 1.45s; }
 /* kleine Spieße (Logo, Ladebildschirm, Kontakt) stehen ebenfalls still, wenn geschlossen */
 html:not(.is-open-now) .spit__bands { animation-play-state: paused; }
-html:not(.is-open-now) .visit__heat { animation-play-state: paused; opacity: .35; }
 
 .hero__open { margin-top: 26px; display: grid; justify-items: start; gap: 10px; }
 .no-js .hero__open .open-status { display: none; }
@@ -1024,6 +1028,7 @@ html:not(.is-open-now) .visit__heat { animation-play-state: paused; opacity: .35
 .kat-tile:hover .kat-tile__ico, .kat-tile:focus-visible .kat-tile__ico { color: var(--bg); transform: rotate(-8deg) scale(1.08); }
 .kat-tile__name { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.05rem, 1.5vw, 1.35rem); line-height: 1.1; text-transform: uppercase; padding-right: 36px; }
 .kat-tile__meta { font-size: .82rem; font-weight: 700; color: var(--muted); transition: color .35s; }
+.kat-tile__price { display: block; margin-top: 2px; font-weight: 800; }
 .kat-tile--star .kat-tile__meta { color: rgba(255, 255, 255, .85); }
 .kat-tile:hover .kat-tile__meta, .kat-tile:focus-visible .kat-tile__meta { color: rgba(14, 10, 7, .75); }
 .kat-tile__arrow {
@@ -1411,19 +1416,8 @@ a.chip:hover { border-color: var(--fry); color: var(--fry); }
   border: 1px solid var(--line);
 }
 .visit__grill { position: relative; display: grid; place-items: center; min-height: 420px; }
-.visit__heat {
-  position: absolute;
-  left: 8%;
-  top: 12%;
-  bottom: 18%;
-  width: 26px;
-  border-radius: 14px;
-  background: linear-gradient(180deg, #ff9d2e, #ff3d1f 50%, #ff9d2e);
-  box-shadow: 0 0 40px 12px rgba(255, 90, 31, .55), 0 0 120px 40px rgba(255, 61, 31, .3);
-  animation: heat 1.6s ease-in-out infinite alternate;
-}
-@keyframes heat { to { box-shadow: 0 0 60px 18px rgba(255, 110, 31, .7), 0 0 160px 60px rgba(255, 61, 31, .35); } }
-.visit__spit { width: min(220px, 60%); height: auto; aspect-ratio: 200 / 360; filter: drop-shadow(0 30px 40px rgba(0, 0, 0, .6)); }
+/* derselbe detaillierte Spieß wie im Kopfbereich (wird per main.js als echte Kopie eingesetzt) */
+.visit__spit { width: min(270px, 70%); height: auto; aspect-ratio: 400 / 620; overflow: visible; filter: drop-shadow(0 30px 40px rgba(0, 0, 0, .6)); }
 .visit__title { font-size: clamp(2.2rem, 5.2vw, 4.8rem); text-transform: uppercase; margin: .3em 0 .4em; }
 .visit__title span { color: var(--fry); }
 .visit__status { margin-bottom: 24px; }
@@ -1701,7 +1695,7 @@ a.chip:hover { border-color: var(--fry); color: var(--fry); }
   .visit { grid-template-columns: minmax(0, 1fr); padding: 80px calc(var(--pad) + 14px); }
   .visit::before { inset: 0 8px; border-radius: 28px; }
   .visit__grill { min-height: 260px; order: 2; }
-  .visit__spit { width: 140px; }
+  .visit__spit { width: 170px; }
   .visit__cards { grid-template-columns: 1fr; }
   .visit__actions .btn { flex: 1 1 auto; }
 }
